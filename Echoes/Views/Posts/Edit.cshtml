@@ -1,0 +1,38 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Echoes.Models.Entities.Post
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Edit Post</h1>
+                    <form method="post">
+                        <input type="hidden" name="PostId" value="@Model.PostId" />
+
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Title</label>
+                            <input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" asp-for="Title" required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Content" class="form-label">Content</label>
+                            <textarea id="Content" name="Content" class="form-control" rows="6" asp-for="Content" required>@Model.Content</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success" asp-controller="Posts" asp-action="Edit">Save Changes</button>
+                            <a asp-action="GetPost" asp-controller="Posts" asp-route-id="@Model.PostId" class="btn btn-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-danger" asp-controller="Posts" asp-action="Delete" asp-route-id="@Model.PostId">Delete Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

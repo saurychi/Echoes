@@ -1,0 +1,37 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Echoes.Models.AddPostViewModel
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h1 class="card-title text-center mb-4">Create a Post</h1>
+                    <form method="post">
+                        <div class="mb-3">
+                            <label for="Title" class="form-label">Title</label>
+                            <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter the title" asp-for="Title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="Content" class="form-label">Content</label>
+                            <textarea id="Content" name="Content" class="form-control" rows="6" placeholder="Write your content here..." asp-for="Content" required></textarea>
+                        </div>
+                        <div class="d-grid">
+                            <input type="hidden" name="UserId" asp-for="UserId" value="@Context.Session.GetInt32("UserId")" />
+                            <button type="submit" class="btn btn-success">Submit Post</button>
+                        </div>
+                    </form>
+                    <p class="text-center mt-3">
+                        <a asp-controller="Posts" asp-action="Posts" class="text-decoration-none">Back to Posts</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Echoes.Models.Entities.Post>
+
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-8 col-md-7">
+            <h2 class="mb-3">My Posts</h2>
+            <div class="list-group">
+                @foreach (var post in Model)
+                {
+                    <a asp-controller="Posts" asp-action="GetPost" asp-route-id="@post.PostId" class="list-group-item list-group-item-action">
+                        <h5 class="">@post.Title</h5>
+                        <p class="mb-1">
+                            @{
+                                var truncatedContent = post.Content.Length > 20
+                                ? post.Content.Substring(0, 20) + "..."
+                                : post.Content;
+                            }
+                            @truncatedContent
+                        </p>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-5">
+            <div class="card shadow-lg mb-4">
+                <div class="card-body">
+                    <h4 class="card-title">Dashboard Options</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <a asp-controller="Posts" asp-action="Add" class="text-decoration-none">Create New Post</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a asp-action="Users" asp-action="Edit" asp-route-id="@Context.Session.GetInt32("UserId")" class="text-decoration-none">Manage Profile</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a asp-action="Posts" asp-action="MyPosts" asp-route-id="@Context.Session.GetInt32("UserId")" class="text-decoration-none">My Posts</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a asp-controller="Users" asp-action="Logout" class="text-decoration-none">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <h4 class="card-title">User Info</h4>
+                    @{
+                        var userName = Context.Session.GetString("UserName");
+                    }
+                    <p><strong>Name:</strong> @userName</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

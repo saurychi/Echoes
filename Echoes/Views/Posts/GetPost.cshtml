@@ -1,0 +1,64 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Echoes.Models.GetPostViewModel
+
+<div class="post-details container mt-4">
+    <!-- Post Details -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">@Model.Title</h2>
+            <p class="card-text"><strong>By:</strong> @Model.Author</p>
+            <p class="card-text">@Model.Content</p>
+        </div>
+        <div class="card-footer d-flex justify-content-between">
+            <span><strong>Likes:</strong> @Model.LikeCount</span>
+            <form method="post">
+                <input type="hidden" name="PostId" value="@Model.PostId" />
+
+                @if (Model.UserId == Context.Session.GetInt32("UserId"))    
+                {
+                    <a class="btn btn-outline-primary btn-sm" asp-controller="Posts" asp-action="Edit" asp-route-id="@Model.PostId">Edit</a>
+                }
+                
+                <button type="submit" class="btn btn-primary btn-sm" asp-controller="Likes" asp-action="AddLike">Like</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h4>Comments</h4>
+        @if (Model.Comments.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var comment in Model.Comments)
+                {
+                    <li class="list-group-item">
+                        <p><small>@comment.CommenterName</small></p>
+                        <p>@comment.CommentContent</p>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p>No comments yet. Be the first to comment!</p>
+        }
+
+        <!-- Add a Comment Form -->
+        <form method="post" asp-controller="Comments" asp-action="Add" class="mb-3">
+            <input type="hidden" name="PostId" value="@Model.PostId" />
+            <div class="form-group">
+                <label for="Content">Add a Comment</label>
+                <textarea id="Content" name="Content" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Submit Comment</button>
+            <a class="btn btn-primary mt-2" asp-controller="Posts" asp-action="Posts">Go back</a>
+        </form>
+
+    </div>
+</div>
